@@ -1,0 +1,7 @@
+.gradle
+state
+out
+target
+build
+*.so
+Dockerfile

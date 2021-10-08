@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+tail -F /work/wordcount/state/word-count-1-window-count/Partition_{0..4}/LOG &
+./gradlew --no-daemon run --args="--config job.config.loader.factory=org.apache.samza.config.loaders.PropertiesConfigLoaderFactory --config job.config.loader.properties.path=$PWD/src/main/config/word-count.properties"
+
+wait

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+while ! timeout --foreground --kill-after=5 3 kcat -L -b kafka1:9091 | grep -q sample-text; do
+	sleep 1
+done
+
+seq 9900 9999 | shuf -r | pv -rlL 1000 | kcat -b kafka1:9091,kafka2:9091 -P -t sample-text

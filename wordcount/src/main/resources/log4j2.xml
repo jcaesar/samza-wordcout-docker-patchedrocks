@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+<Properties>
+    <Property name="pattern">%d [%X{idreq} %X{iduser} %X{codeenv}] %-5p
+        [%c{1}] : %m%n</Property>
+    <Property name="level">${sys:LOG4J_LEVEL:-info}</Property>
+</Properties>
+<Appenders>
+    <Console name="console" target="SYSTEM_OUT" follow="true"  >
+        <PatternLayout pattern="${pattern}" />
+    </Console>
+</Appenders>
+<Loggers>
+    <Root level="${level}">
+        <AppenderRef ref="console" />
+    </Root>
+</Loggers>
+</Configuration>

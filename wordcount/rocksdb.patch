@@ -1,0 +1,36 @@
+diff --git a/db/db_impl/db_impl.cc b/db/db_impl/db_impl.cc
+index f91102017..3263b97de 100644
+--- a/db/db_impl/db_impl.cc
++++ b/db/db_impl/db_impl.cc
+@@ -3721,6 +3721,7 @@ void DumpRocksDBBuildVersion(Logger* log) {
+   ROCKS_LOG_HEADER(log, "RocksDB version: %d.%d.%d\n", ROCKSDB_MAJOR,
+                    ROCKSDB_MINOR, ROCKSDB_PATCH);
+   ROCKS_LOG_HEADER(log, "Git sha %s", rocksdb_build_git_sha);
++  ROCKS_LOG_HEADER(log, "Caesar patched");
+   ROCKS_LOG_HEADER(log, "Compile date %s", rocksdb_build_compile_date);
+ #else
+   (void)log;  // ignore "-Wunused-parameter"
+diff --git a/java/CMakeLists.txt b/java/CMakeLists.txt
+index b1f706c16..06cecf29a 100644
+--- a/java/CMakeLists.txt
++++ b/java/CMakeLists.txt
+@@ -316,8 +316,8 @@ if (DEFINED CUSTOM_REPO_URL)
+   set(SEARCH_REPO_URL ${CUSTOM_REPO_URL}/)
+   set(CENTRAL_REPO_URL ${CUSTOM_REPO_URL}/)
+ else ()
+-  set(SEARCH_REPO_URL "http://search.maven.org/remotecontent?filepath=")
+-  set(CENTRAL_REPO_URL "http://central.maven.org/maven2/")
++  set(SEARCH_REPO_URL "https://search.maven.org/remotecontent?filepath=")
++  set(CENTRAL_REPO_URL "https://repo1.maven.org/maven2/")
+ endif()
+ 
+ if(NOT EXISTS ${JAVA_JUNIT_JAR})
+@@ -490,7 +490,7 @@ if(NOT MINGW)
+   set(ROCKSDBJNI_SHARED_LIB rocksdbjni-shared${ARTIFACT_SUFFIX})
+   add_library(${ROCKSDBJNI_SHARED_LIB} SHARED ${JNI_NATIVE_SOURCES})
+   add_dependencies(${ROCKSDBJNI_SHARED_LIB} rocksdbjni_headers)
+-  target_link_libraries(${ROCKSDBJNI_SHARED_LIB} ${ROCKSDB_STATIC_LIB} ${LIBS})
++  target_link_libraries(${ROCKSDBJNI_SHARED_LIB} ${ROCKSDB_STATIC_LIB} ${THIRDPARTY_LIBS} ${SYSTEM_LIBS})
+ 
+   set_target_properties(
+     ${ROCKSDBJNI_SHARED_LIB}
